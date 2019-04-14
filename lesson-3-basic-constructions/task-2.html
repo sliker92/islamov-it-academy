@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function  humanInfo() {
+    var fullName  = "";
+    var genderStatus;
+    var pension;
+    fullNameQuestion();
+    function fullNameQuestion() {
+      function fullNameQuestion(question) {
+        var nameInfo = prompt(question);
+        if (!nameInfo || isFinite(parseInt(nameInfo))){
+          fullNameQuestion(question);
+        } else{
+          fullName += nameInfo + " ";
+        }
+      }
+      fullNameQuestion("Введите вашу фамилию: ");
+      fullNameQuestion("Введите вашу имя: ");
+      fullNameQuestion("Введите вашу отчество: ");
+      var age = parseInt(prompt('возраст в годах: '));
+      var gender =  confirm('ваш пол - мужской?');
+      gender === true ?  genderStatus = 'мужской' : genderStatus = 'женский';
+      pensionFunc();
+      function pensionFunc() {
+        if ( age >= 65 && gender === true) {
+          return pension = 'да';
+        }
+        else if ( age >= 58 && gender === false)
+          return pension = 'да';
+        else {
+          return pension = 'нет';
+        }
+      }
+      if (age!=0 && fullName.length != 0 && !isNaN(age)){
+        alert('ваше ФИО: ' + fullName +
+          '\nваш возраст в годах: ' + age +
+          '\nваш возраст в днях: ' + age * 365 +
+          '\nчерез 5 лет вам будет: ' + age + 5 +
+          '\nваш пол: ' + genderStatus +
+          '\nвы на пенсии: ' + pension)
+      } else {
+        alert("Введите возвраст снова в корректной форме");
+      }
+    }}
+  humanInfo();
+</script>
+</body>
+</html>
