@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  var question = prompt('Введите строку: ').toLowerCase();
+  var letter = 'аоуыэяёюие';
+  var result = 0;
+  function myFunc() {
+    for (var i = 0; i <= question.length; i++) {
+     if (letter.indexOf(question[i]) !== -1)
+      { result += 1;
+       }
+    }
+    return result;
+  }
+  myFunc();
+  alert('Глаcных букв: ' + result)
+</script>
+</body>
+</html>
