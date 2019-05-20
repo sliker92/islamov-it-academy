@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.2px;
+    background-color: lightgrey;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    padding: 2%;
+}
+.right-side {
+    margin-left: 50px;
+}
+button {
+    cursor: pointer;
+    min-width: 200px;
+    padding: 15px 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    background: lightskyblue;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0,34,60);
+    transition: all ease-in-out 0.5s;
+}
+button:hover {
+    box-shadow: 0 0 25px rgb(0,34,60);
+    letter-spacing: 2px;
+    transform: scale(1.1)
+}
+
+button:active {
+    letter-spacing: 1.7px;
+    transform: scale(1.05)
+}
+
+button:focus {
+    outline: none;
+}
+
+.btn-description {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.btn-wrapper {
+    margin-bottom: 30px;
+}
+
+.drink-list {
+    padding-top: 2px;
+    padding-left: 20px;
+    color: #000;
+    letter-spacing: 1.2px;
+    font-size: 22px;
+}
+
+
+

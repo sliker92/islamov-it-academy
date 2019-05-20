@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task-10</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src = "THashStorage.js"></script>
+    <script> var DrinkStorage = new THashStorage() </script>
+</head>
+<body>
+<main class="wrapper">
+    <div class="left-side">
+        <div class="btn-wrapper">
+            <p class="btn-description">Ввод информации о напитке</p>
+            <button class="btn-input">Ввод</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Получение информации о напитке</p>
+            <button class="btn-get">Получить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Удаление информации о напитке</p>
+            <button class="btn-delete">Удалить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Список напитков</p>
+            <button class="btn-list">Получить</button>
+        </div>
+    </div>
+    <div class="right-side">
+            <p class="drink-list"></p>
+    </div>
+</main>
+<script>
+document.querySelector('.btn-input').addEventListener('click', AddNewDrink);
+document.querySelector('.btn-get').addEventListener('click', getDrinkValue);
+document.querySelector('.btn-delete').addEventListener('click', deleteDrinkValue);
+document.querySelector('.btn-list').addEventListener('click', getTheKeys);
+
+function AddNewDrink() {
+  var drinkName = prompt ('Название напитка?');
+  var drinkAlco = confirm ('Напиток алкогольный?');
+  var drinkAlcoRus = '';
+
+  if (drinkAlco === true){
+    drinkAlcoRus = 'да';
+  } else {
+    drinkAlcoRus = 'нет';
+  }
+
+  var drinkContent = prompt ('Состав напитка?');
+  var drinkInfo = {'алкогольный': drinkAlcoRus,'состав' : drinkContent};
+  DrinkStorage.AddValue(drinkName,drinkInfo);
+}
+
+function getDrinkValue() {
+  var drinkName = prompt('Название напитка');
+  var drinkNameRes = DrinkStorage.GetValue(drinkName);
+
+  if (drinkNameRes === false)
+  {
+    alert('Напитка ' + drinkName + ' нет.');
+  } else
+  {
+    alert('напиток: ' + drinkName + '\r\nалкогольный: ' + DrinkStorage.info[drinkName].алкогольный + '\r\nсостав: '
+      + DrinkStorage.info[drinkName].состав);
+  }
+}
+
+function deleteDrinkValue () {
+  var drinkName = prompt('Какой напиток удалить?');
+  var drinkNameResult = DrinkStorage.DeleteValue(drinkName);
+
+  if (drinkNameResult === false)
+  {
+    alert('Напитка ' + drinkName + ' нет');
+  } else
+  {
+    alert('Напиток ' + drinkName + ' удален');
+  }
+}
+
+function getTheKeys () {
+  var listDrinks = DrinkStorage.GetKeys();
+  document.querySelector('.drink-list').textContent = "Напитки: " + listDrinks;
+}
+</script>
+</body>
+</html>
