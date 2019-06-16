@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task-18</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<!--    <script src = "THashStorage.js"></script>-->
+    <script src = "LocalStorage.js"></script>
+    <script>
+      var DrinkStorage = new LocalStorage('drink');
+      var DishStorage = new LocalStorage('dish');
+    </script>
+</head>
+<body>
+<main class="wrapper">
+    <div class="left-side">
+        <div class="btn-wrapper">
+            <p class="btn-description">Ввод информации о напитке</p>
+            <button class="btn-input">Ввод</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Получение информации о напитке</p>
+            <button class="btn-get">Получить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Удаление информации о напитке</p>
+            <button class="btn-delete">Удалить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Список напитков</p>
+            <button class="btn-list">Получить</button>
+        </div>
+        <div class="list-wrapper">
+            <p class="drink-list"></p>
+        </div>
+    </div>
+
+    <div class="right-side">
+        <div class="btn-wrapper">
+            <p class="btn-description">Ввод информации о блюде</p>
+            <button class="btn-input-dish">Ввод</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Получение информации о блюде</p>
+            <button class="btn-get-dish">Получить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Удаление информации о блюде</p>
+            <button class="btn-delete-dish">Удалить</button>
+        </div>
+        <div class="btn-wrapper">
+            <p class="btn-description">Список блюд</p>
+            <button class="btn-list-dish">Получить</button>
+        </div>
+        <div class="list-wrapper">
+            <p class="dish-list"></p>
+        </div>
+    </div>
+</main>
+<script>
+document.querySelector('.btn-input').addEventListener('click', AddNewDrink);
+document.querySelector('.btn-get').addEventListener('click', getDrinkValue);
+document.querySelector('.btn-delete').addEventListener('click', deleteDrinkValue);
+document.querySelector('.btn-list').addEventListener('click', getTheDrinkKeys);
+document.querySelector('.btn-input-dish').addEventListener('click', AddNewDish);
+document.querySelector('.btn-get-dish').addEventListener('click', getDishValue);
+document.querySelector('.btn-delete-dish').addEventListener('click', deleteDishValue);
+document.querySelector('.btn-list-dish').addEventListener('click', getTheDishKeys);
+
+//  Напитки
+
+function AddNewDrink() {
+  var drinkName = prompt ('Название напитка?');
+  var drinkAlco = confirm ('Напиток алкогольный?');
+  var drinkAlcoRus = '';
+
+  if (drinkAlco === true){
+    drinkAlcoRus = 'да';
+  } else {
+    drinkAlcoRus = 'нет';
+  }
+
+  var drinkContent = prompt ('Состав напитка?');
+  var drinkInfo = {'алкогольный': drinkAlcoRus,'состав' : drinkContent};
+  DrinkStorage.AddValue(drinkName,drinkInfo);
+  DrinkStorage.Store();
+}
+
+function getDrinkValue() {
+  var drinkName = prompt('Название напитка');
+  var drinkNameRes = DrinkStorage.GetValue(drinkName);
+
+  if (drinkNameRes === false || drinkNameRes === undefined) {
+    alert('Напитка ' + drinkName + ' нет.');
+  } else {
+    alert('напиток: ' + drinkName + '\r\nалкогольный: ' + DrinkStorage.info[drinkName].алкогольный + '\r\nсостав: '
+      + DrinkStorage.info[drinkName].состав);
+  }
+}
+
+function deleteDrinkValue () {
+  var drinkName = prompt('Какой напиток удалить?');
+  alert('Напиток ' + drinkName + ' удален');
+  DrinkStorage.Store();
+}
+
+function getTheDrinkKeys () {
+  var listDrinks = DrinkStorage.GetKeys();
+  document.querySelector('.drink-list').textContent = "Напитки: " + listDrinks;
+}
+
+//  Блюда
+
+function AddNewDish() {
+  var dishName = prompt ('Название блюда?');
+  var dishDelic = confirm ('Ваше блюдо считается деликатесом?');
+  var dishDelicRus = '';
+
+  if (dishDelic === true) {
+    dishDelicRus = 'да';
+  } else {
+    dishDelicRus = 'нет';
+  }
+
+  var dishContent = prompt ('Рецепт блюда?');
+  var dishInfo = {'деликатес': dishDelicRus,'рецепт' : dishContent};
+  DishStorage.AddValue(dishName,dishInfo);
+  DishStorage.Store();
+}
+
+function getDishValue() {
+  var dishName = prompt('Название блюда');
+  var dishNameRes = DishStorage.GetValue(dishName);
+
+  if (dishNameRes === false || dishNameRes === undefined) {
+    alert('Блюда ' + dishName + ' нет.');
+  } else {
+    alert('блюдо: ' + dishName + '\r\nделикатес: ' + DishStorage.info[dishName].деликатес + '\r\nрецепт: '
+      + DishStorage.info[dishName].рецепт);
+  }
+}
+
+function deleteDishValue () {
+  var dishName = prompt('Какое блюдо удалить?');
+  alert('Блюдо ' + dishName + ' удалено');
+  DishStorage.Store();
+}
+
+function getTheDishKeys () {
+  var listdishs = DishStorage.GetKeys();
+  document.querySelector('.dish-list').textContent = "Блюда: " + listdishs;
+}
+
+</script>
+</body>
+</html>
