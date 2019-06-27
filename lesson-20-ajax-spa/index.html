@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>task-20</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&display=swap' rel='stylesheet'>
+    <link rel='stylesheet' href='style.css'>
+    <script src='//code.jquery.com/jquery-2.1.1.min.js'></script>
+    <script src = 'LocalStorage.js'></script>
+    <script src = 'AJAXStorage.js'></script>
+</head>
+<body>
+<main class='wrapper'>
+    <div class='left-side'>
+        <div class='btn-wrapper'>
+            <p class='btn-description'>Ввод информации о напитке</p>
+            <button class='btn-input'>Ввод</button>
+        </div>
+        <div class='btn-wrapper'>
+            <p class='btn-description'>Получение информации о напитке</p>
+            <button class='btn-get'>Получить</button>
+        </div>
+        <div class='btn-wrapper'>
+            <p class='btn-description'>Удаление информации о напитке</p>
+            <button class='btn-delete'>Удалить</button>
+        </div>
+        <div class='btn-wrapper'>
+            <p class='btn-description'>Список напитков</p>
+            <button class='btn-list'>Получить</button>
+        </div>
+        <div class='list-wrapper'>
+            <p class='drink-list'></p>
+        </div>
+    </div>
+</main>
+<script>
+var AJAXStorage = new TAJAXStorage('drink');
+var DrinkStorage = new LocalStorage('drink');
+document.querySelector('.btn-input').addEventListener('click', AddNewDrink);
+document.querySelector('.btn-get').addEventListener('click', getDrinkValue);
+document.querySelector('.btn-delete').addEventListener('click', deleteDrinkValue);
+document.querySelector('.btn-list').addEventListener('click', getTheDrinkKeys);
+
+function AddNewDrink() {
+  var drinkName = prompt ('Название напитка?');
+  var drinkAlco = confirm ('Напиток алкогольный?');
+  var drinkAlcoRus = '';
+
+  if (drinkAlco === true){
+    drinkAlcoRus = 'да';
+  } else {
+    drinkAlcoRus = 'нет';
+  }
+
+  var drinkContent = prompt ('Состав напитка?');
+  var drinkInfo = {'алкогольный': drinkAlcoRus,'состав' : drinkContent};
+  DrinkStorage.AddValue(drinkName,drinkInfo);
+  AJAXStorage.addValue(drinkName,drinkInfo);
+  DrinkStorage.Store();
+}
+
+function getDrinkValue() {
+  var drinkName = prompt('Название напитка');
+  var drinkNameRes = DrinkStorage.GetValue(drinkName);
+  var drinkNameAJAX = AJAXStorage.getValue(drinkName);
+  if (drinkNameRes === false || drinkNameRes === undefined && drinkNameAJAX === false || drinkNameAJAX === undefined) {
+    alert('Напитка ' + drinkName + ' нет.');
+  } else {
+    alert('напиток: ' + drinkName + '\r\nалкогольный: ' + DrinkStorage.info[drinkName].алкогольный + '\r\nсостав: '
+      + DrinkStorage.info[drinkName].состав);
+  }
+}
+
+function deleteDrinkValue () {
+  var drinkName = prompt('Какой напиток удалить?');
+  alert('Напиток ' + drinkName + ' удален');
+  DrinkStorage.DeleteValue(drinkName);
+  AJAXStorage.deleteValue(drinkName);
+  DrinkStorage.Store();
+}
+
+function getTheDrinkKeys () {
+  var listLocalStorageDrinks = DrinkStorage.GetKeys();
+  var listAJAXStorageDrinks = AJAXStorage.getKeys();
+  document.querySelector('.drink-list').textContent = 'Напитки в LocalStorage: ' + listLocalStorageDrinks
+    +  ' Напитки в AJAXStorage: ' + listAJAXStorageDrinks;
+}
+</script>
+</body>
+</html>
