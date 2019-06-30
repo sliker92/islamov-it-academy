@@ -44,13 +44,13 @@ function SwitchToStateFromURLHash() {
           PageHTML += "<a href='#' onmousedown='SwitchToArticlePage()'>статья</a>"; // не понимаю почему не работает onclick
         }
 
-        var el = document.getElementsByTagName('a');
+        var link = document.getElementsByTagName('a');
 
         for (let y = 0; y < el.length; y++) {
-          PageHTML += el[y].className = articleArr[y]; // НЕ понимаю почему не навешивается класс:
+          link[y].className = articleArr[y]; // НЕ понимаю почему не навешивается класс:
         }
 
-        console.log(el); // он видит все теги но не сетает класс
+        console.log(link); // он видит все теги но не сетает класс
       break;
 
       case 'About':
