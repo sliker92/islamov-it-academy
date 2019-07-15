@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper {
+    background-color: lightpink;
+    /*border: 2px solid lightblue;*/
+}
+
+.racket1 {
+    background-color: green;
+    position: absolute;
+}
+
+.racket2 {
+    background-color: yellow;
+    position: absolute;
+}
+
+.ball {
+    background-color: brown;
+    position: absolute;
+}
+
+.buttonStart {
+    padding: 10px 30px;
+    background-color: blueviolet;
+    display: inline;
+    margin-bottom: 15px;
+}
+
+.scoreWrap {
+    font-size: 40px;
+    display: inline;
+    margin-left: 200px;
+}
