@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson-21-es6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+</main>
+<!--<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>-->
+<script src='http://code.jquery.com/jquery-latest.js'></script>
+<script>
+
+window.onhashchange = SwitchToStateFromURLHash;
+let SPAStateH = {};
+let articleArr = ['audi', 'bmw', 'ferrari', 'honda', 'lexus', 'mazda', 'nissan', 'renault'];
+
+function SwitchToStateFromURLHash() {
+    let URLHash = window.location.hash;
+    let StateJSON = decodeURIComponent(URLHash.substr(1));
+
+    if (StateJSON !== "") {
+      SPAStateH = JSON.parse(StateJSON);
+    } else {
+      SPAStateH = {pagename: 'Main'};
+    }
+
+    let PageHTML = "";
+
+    switch (SPAStateH.pagename) {
+      case 'Main':
+        PageHTML += "<h3>Энциклопедия</h3>";
+        PageHTML += "<a href='#' onmousedown='SwitchToAllArticlesPage()'>Статьи тут</a>";
+      break;
+
+      case 'All articles':
+        PageHTML += "<h3>Энциклопедия авто</h3>";
+        let letterArr = ['A', 'B', 'H', 'N', 'F', 'M', 'R', 'L'];
+        letterArr.sort();
+
+        for (let i = 0; i < letterArr.length; i++) {
+          PageHTML += '<p>' + letterArr[i] + '</p>';
+          PageHTML += "<a href='#' onmousedown='SwitchToArticlePage()'>статья</a>"; // не понимаю почему не работает onclick
+        }
+
+        var link = document.getElementsByTagName('a');
+
+        for (let y = 0; y < el.length; y++) {
+          link[y].className = articleArr[y]; // НЕ понимаю почему не навешивается класс:
+        }
+
+        console.log(link); // он видит все теги но не сетает класс
+      break;
+
+      case 'About':
+          getArticleHTML(articleArr[0]);
+      break;
+    }
+
+    document.querySelector('main').innerHTML = PageHTML;
+}
+
+function SwitchToState(NewStateH) {
+    location.hash = encodeURIComponent(JSON.stringify(NewStateH));
+}
+
+function SwitchToAllArticlesPage() {
+    SwitchToState( {pagename:'All articles'} );
+}
+
+function SwitchToArticlePage() {
+  SwitchToState( {pagename:'About'} );
+}
+
+SwitchToStateFromURLHash();
+
+function getArticleHTML(name) {
+  $.ajax("articles/" + name + ".html",
+    {type: 'GET', dataType: 'html', success: DataLoaded, error: ErrorHandler}
+  );
+}
+
+function DataLoaded(data) {
+  document.querySelector('main').innerHTML = data;
+}
+
+function ErrorHandler(jqXHR, StatusStr, ErrorStr) {
+  alert(StatusStr + ' ' + ErrorStr);
+}
+</script>
+</body>
+</html>
